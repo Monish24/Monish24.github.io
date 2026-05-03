@@ -1,275 +1,848 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monish Shah - Data Scientist & AI Researcher</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monish Shah — Data Scientist</title>
+<meta name="description" content="Monish Shah — MSc Data Science candidate at Leiden University. Machine learning, NLP, and large-scale data systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e14;
+    --bg-elev: #11161f;
+    --bg-card: #141a25;
+    --ink: #e8ddc7;
+    --ink-dim: #9a9079;
+    --ink-faint: #5a5447;
+    --accent: #e4b85e;
+    --accent-dim: #a88438;
+    --line: #2a2f3a;
+    --line-soft: #1d2230;
+    --display: 'Fraunces', Georgia, serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--display);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Starfield background */
+  .stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(232, 221, 199, 0.4), transparent),
+      radial-gradient(1px 1px at 80% 70%, rgba(232, 221, 199, 0.3), transparent),
+      radial-gradient(1px 1px at 40% 80%, rgba(228, 184, 94, 0.5), transparent),
+      radial-gradient(1px 1px at 90% 20%, rgba(232, 221, 199, 0.3), transparent),
+      radial-gradient(1px 1px at 60% 50%, rgba(232, 221, 199, 0.2), transparent),
+      radial-gradient(1px 1px at 15% 60%, rgba(232, 221, 199, 0.4), transparent),
+      radial-gradient(2px 2px at 70% 15%, rgba(228, 184, 94, 0.3), transparent),
+      radial-gradient(1px 1px at 35% 45%, rgba(232, 221, 199, 0.2), transparent),
+      radial-gradient(1px 1px at 85% 90%, rgba(232, 221, 199, 0.3), transparent),
+      radial-gradient(1px 1px at 5% 85%, rgba(232, 221, 199, 0.2), transparent);
+    background-size: 100% 100%;
+    opacity: 0.6;
+  }
+
+  /* Grain overlay */
+  .grain {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
+    mix-blend-mode: overlay;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 24px 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: rgba(10, 14, 20, 0.7);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav .mark {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+  }
+  nav .mark span { color: var(--accent); }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  nav ul a {
+    color: var(--ink-dim);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  nav ul a:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 0 80px;
+    position: relative;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.1s forwards;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .lede {
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--ink-dim);
+    max-width: 540px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--ink-faint);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+  .meta-row span { display: flex; align-items: center; gap: 8px; }
+  .meta-row .dot {
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  /* Photo placeholder / disc */
+  .portrait {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .portrait-disc {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #2a2f3a 0%, #141a25 50%, #0a0e14 100%);
+    box-shadow:
+      inset -20px -20px 60px rgba(0, 0, 0, 0.5),
+      inset 10px 10px 40px rgba(228, 184, 94, 0.05),
+      0 0 80px rgba(228, 184, 94, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .portrait-disc::before {
+    content: "";
+    position: absolute;
+    top: 25%; left: 30%;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.3);
+    box-shadow:
+      30px 20px 0 -2px rgba(0,0,0,0.25),
+      -10px 50px 0 -1px rgba(0,0,0,0.3),
+      60px 60px 0 -3px rgba(0,0,0,0.2),
+      20px 90px 0 -2px rgba(0,0,0,0.25),
+      80px 30px 0 -4px rgba(0,0,0,0.2);
+  }
+  .portrait img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: none;
+  }
+  .portrait.has-photo .portrait-disc { display: none; }
+  .portrait.has-photo img { display: block; }
+
+  .portrait-orbit {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    border: 1px dashed var(--line);
+    animation: spin 60s linear infinite;
+  }
+  .portrait-orbit::after {
+    content: "";
+    position: absolute;
+    top: -3px; left: 50%;
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Section */
+  section {
+    padding: 100px 0;
+    position: relative;
+  }
+  section + section { border-top: 1px solid var(--line-soft); }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: clamp(32px, 4vw, 48px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+  .about-text p {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--ink-dim);
+    margin-bottom: 20px;
+  }
+  .about-text p:first-child { color: var(--ink); font-size: 19px; }
+  .about-text strong { color: var(--ink); font-weight: 500; }
+
+  .skills-block { font-family: var(--mono); font-size: 13px; }
+  .skills-block .skill-row {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .skills-block .skill-row:first-child { padding-top: 0; }
+  .skills-block .skill-label {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 11px;
+  }
+  .skills-block .skill-items {
+    color: var(--ink-dim);
+    font-family: var(--display);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Projects */
+  .projects {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .project {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 40px;
+    align-items: baseline;
+    position: relative;
+    transition: padding 0.4s ease;
+  }
+  .project:first-child { padding-top: 0; }
+  .project:hover { padding-left: 16px; padding-right: 16px; background: linear-gradient(90deg, rgba(228, 184, 94, 0.02), transparent); }
+  .project:hover .project-title { color: var(--accent); }
+  .project-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+  }
+  .project-body { }
+  .project-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    transition: color 0.3s ease;
+    line-height: 1.2;
+  }
+  .project-title em { font-style: italic; }
+  .project-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .project-desc {
+    font-size: 15.5px;
+    color: var(--ink-dim);
+    line-height: 1.7;
+    margin-bottom: 16px;
+    max-width: 720px;
+  }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .project-tags span {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+  .project-link {
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--line);
+    padding: 10px 18px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .project-link:hover {
+    color: var(--bg);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* Education */
+  .edu-list { display: flex; flex-direction: column; gap: 32px; }
+  .edu-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .edu-item:last-child { border-bottom: none; }
+  .edu-period {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .edu-school {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+  .edu-degree {
+    font-style: italic;
+    color: var(--ink-dim);
+    margin-bottom: 12px;
+    font-size: 15px;
+  }
+  .edu-detail {
+    font-size: 14px;
+    color: var(--ink-faint);
+    line-height: 1.6;
+  }
+
+  /* Contact */
+  .contact-block {
+    text-align: center;
+    padding: 40px 0;
+  }
+  .contact-title {
+    font-family: var(--display);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(40px, 6vw, 72px);
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    line-height: 1.1;
+  }
+  .contact-title em { color: var(--accent); }
+  .contact-methods {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+  .contact-methods a {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-dim);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 4px;
+    transition: all 0.3s ease;
+  }
+  .contact-methods a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* Footer */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--line-soft);
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+  }
+
+  /* Responsive */
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .portrait { width: 200px; height: 200px; margin: 0 auto; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .project { grid-template-columns: 1fr; gap: 12px; }
+    .project-num { display: none; }
+    .project-link { justify-self: start; margin-top: 8px; }
+    .edu-item { grid-template-columns: 1fr; gap: 8px; }
+    nav ul { gap: 20px; font-size: 10px; }
+    nav ul a:not(.show-mobile) { display: none; }
+    .container { padding: 0 24px; }
+    section { padding: 64px 0; }
+  }
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">Monish Shah</div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
+
+<div class="stars"></div>
+<div class="grain"></div>
+
+<nav>
+  <div class="container">
+    <div class="mark">M<span>·</span>S</div>
+    <ul>
+      <li><a href="#about" class="show-mobile">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact" class="show-mobile">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Data Scientist · Leiden, NL</div>
+        <h1>Monish Shah,<br>making sense of <em>noisy data</em>.</h1>
+        <p class="lede">
+          MSc Data Science candidate building end-to-end machine learning systems —
+          from transformer-based NLP to large-scale similarity search and big-data
+          classification with Apache Spark. I like problems where the data is messy,
+          the constraints are tight, and the answer isn&rsquo;t obvious.
+        </p>
+        <div class="meta-row">
+          <span><span class="dot"></span>Leiden University</span>
+          <span><span class="dot"></span>Available for thesis internships</span>
+          <span><span class="dot"></span>EN · HI · GU</span>
         </div>
-    </nav>
+      </div>
+      <div class="portrait" id="portrait">
+        <div class="portrait-orbit"></div>
+        <div class="portrait-disc"></div>
+        <img src="" alt="Monish Shah" id="portrait-img">
+      </div>
+    </div>
+  </div>
+</header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Hi, I'm <span class="highlight">Monish Shah</span></h1>
-            <h2>Data Scientist & AI Researcher</h2>
-            <p class="hero-description">
-                Master's student at Leiden University specializing in Deep Learning, Reinforcement Learning, and Multi-Modal AI Systems. 
-                Passionate about applying cutting-edge AI to solve real-world problems.
-            </p>
-            <div class="hero-buttons">
-                <a href="#projects" class="btn primary">View My Work</a>
-                <a href="#contact" class="btn secondary">Get In Touch</a>
-            </div>
-            <div class="social-links">
-                <a href="https://github.com/Monish24" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="mailto:monish002410@gmail.com"><i class="fas fa-envelope"></i></a>
-                <a href="https://linkedin.com/in/monish-shah" target="_blank"><i class="fab fa-linkedin"></i></a>
-            </div>
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">01 / About</div>
+      <h2 class="section-title">A short <em>orbit</em>.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a data scientist in the final stretch of my MSc at <strong>Leiden University</strong>,
+          where my focus has been on text mining, recommender systems, and the unglamorous
+          work of making models behave under real constraints.
+        </p>
+        <p>
+          Before Leiden, I completed a Postgraduate Diploma in Data Science at the
+          <strong>University of Nottingham</strong> and a BSc in Computer Science from the
+          University of Mumbai. Along the way I&rsquo;ve built transformer pipelines for
+          adverse drug event extraction, used locality-sensitive hashing to find
+          similar users across the Netflix Prize dataset, and shipped a full-stack
+          music streaming app with a Vue/TypeScript frontend.
+        </p>
+        <p>
+          My early interest was astronomy &mdash; I still find myself drawn to problems
+          with the same flavor: large datasets, sparse signals, and a need for
+          principled approximation. I&rsquo;m currently looking for a thesis internship
+          where I can put this to work on something real.
+        </p>
+      </div>
+      <div class="skills-block">
+        <div class="skill-row">
+          <div class="skill-label">Languages</div>
+          <div class="skill-items">Python · TypeScript · C++ · SQL</div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>
-                        I'm currently pursuing a Master's in Computer Science (Data Science Track) at Leiden University, 
-                        where I'm diving deep into advanced and SOTA AI techniques including Deep Learning, Reinforcement Learning, 
-                        and Multi-Modal AI Systems.
-                    </p>
-                    <p>
-                        My academic journey spans from Mumbai University to the University of Nottingham, and now Leiden, 
-                        giving me a diverse perspective on computer science education and research approaches.
-                    </p>
-                    <div class="achievements">
-                        <div class="achievement">
-                            <h3>🏆 1st Place</h3>
-                            <p>Kaggle Recommender Systems Competition</p>
-                        </div>
-                        <div class="achievement">
-                            <h3>🎓 Honors Graduate</h3>
-                            <p>Bachelor's in Computer Science</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="skill-row">
+          <div class="skill-label">ML / DS</div>
+          <div class="skill-items">PyTorch · Hugging Face · scikit-learn · XGBoost · LightGBM · CatBoost</div>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid">
-                
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>🏆 Kaggle Recommender Systems Competition</h3>
-                        <span class="project-status">1st Place Winner</span>
-                    </div>
-                    <p class="project-description">
-                        Achieved first place with Recall@20 of 0.0448 on highly sparse dataset (330K users, 65K items). 
-                        Solved 94% cold-start challenge using advanced hybrid recommendation techniques.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Scikit-learn</span>
-                        <span class="tech-tag">Hybrid RecSys</span>
-                        <span class="tech-tag">Cold-Start Problem</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Details</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>🎯 Netflix User Similarity Detection</h3>
-                        <span class="project-status">Perfect Score</span>
-                    </div>
-                    <p class="project-description">
-                        Implemented LSH with MinHash signatures for 100K+ Netflix users. Optimized memory-efficient 
-                        similarity detection reducing complexity from O(n²) to near-linear time.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">LSH</span>
-                        <span class="tech-tag">MinHash</span>
-                        <span class="tech-tag">Big Data</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="https://github.com/Monish24" class="project-link">GitHub</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>🏥 Clinical Text ADE Extraction</h3>
-                        <span class="project-status">Research Project</span>
-                    </div>
-                    <p class="project-description">
-                        Comparative analysis of transformer models (BERT, BioBERT, SpanBERT) for Adverse Drug Event extraction. 
-                        Achieved F1 scores >0.75 on noisy consumer-generated text.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">BERT</span>
-                        <span class="tech-tag">BioBERT</span>
-                        <span class="tech-tag">Healthcare AI</span>
-                        <span class="tech-tag">NLP</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Details</a>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>🎮 Multi-Agent Codenames AI</h3>
-                        <span class="project-status">AI Game System</span>
-                    </div>
-                    <p class="project-description">
-                        Developed intelligent agents using Monte Carlo Tree Search and advanced NLP techniques. 
-                        Integrated Sentence-BERT for semantic word association in competitive gameplay.
-                    </p>
-                    <div class="project-tech">
-                        <span class="tech-tag">MCTS</span>
-                        <span class="tech-tag">Sentence-BERT</span>
-                        <span class="tech-tag">Game AI</span>
-                        <span class="tech-tag">Multi-Agent</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">View Details</a>
-                    </div>
-                </div>
-
-            </div>
+        <div class="skill-row">
+          <div class="skill-label">Big Data</div>
+          <div class="skill-items">Apache Spark (PySpark, MLlib) · pandas · NumPy · SciPy</div>
         </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-                
-                <div class="skill-category">
-                    <h3><i class="fas fa-code"></i> Programming</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">TypeScript</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">HTML/CSS</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3><i class="fas fa-brain"></i> ML/DL Frameworks</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">Keras</span>
-                        <span class="skill-tag">Scikit-learn</span>
-                        <span class="skill-tag">TensorFlow Addons</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3><i class="fas fa-database"></i> Big Data & Analytics</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">PySpark</span>
-                        <span class="skill-tag">Apache Spark</span>
-                        <span class="skill-tag">NumPy</span>
-                        <span class="skill-tag">Pandas</span>
-                        <span class="skill-tag">Matplotlib</span>
-                    </div>
-                </div>
-
-                <div class="skill-category">
-                    <h3><i class="fas fa-robot"></i> AI Techniques</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Deep Learning</span>
-                        <span class="skill-tag">Reinforcement Learning</span>
-                        <span class="skill-tag">NLP</span>
-                        <span class="skill-tag">Computer Vision</span>
-                        <span class="skill-tag">GANs</span>
-                    </div>
-                </div>
-
-            </div>
+        <div class="skill-row">
+          <div class="skill-label">Web</div>
+          <div class="skill-items">Vue.js · React · Node.js · Express · MySQL</div>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h3>Email</h3>
-                            <p>monish002410@gmail.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h3>Location</h3>
-                            <p>The Hague, Netherlands</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h3>Phone</h3>
-                            <p>+31 68649110</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form">
-                    <form>
-                        <div class="form-group">
-                            <input type="text" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea placeholder="Your Message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn primary">Send Message</button>
-                    </form>
-                </div>
-            </div>
+        <div class="skill-row">
+          <div class="skill-label">Tooling</div>
+          <div class="skill-items">Git · Linux · Jupyter · Docker (basic)</div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Monish Shah. All rights reserved.</p>
+<section id="work">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">02 / Selected Work</div>
+      <h2 class="section-title">Things I&rsquo;ve <em>built</em>.</h2>
+    </div>
+    <div class="projects">
+
+      <article class="project">
+        <div class="project-num">001</div>
+        <div class="project-body">
+          <h3 class="project-title">Scalable User Similarity at <em>Netflix Scale</em></h3>
+          <div class="project-meta">Leiden · 2025 · LSH + MinHash</div>
+          <p class="project-desc">
+            A memory-efficient pipeline to identify pairs of users with Jaccard similarity > 0.5
+            across 100K users, 17,770 movies, and 65M+ ratings. Implemented MinHash signatures
+            and LSH banding (b=20, r=5) with MD5 bucketing on SciPy CSR sparse matrices.
+            Came in at ~6 minutes runtime and ~6 GB peak memory against hard limits of 30 minutes
+            and 8 GB &mdash; finding ~544 similar pairs reproducibly across seeds.
+          </p>
+          <div class="project-tags">
+            <span>Python</span><span>NumPy</span><span>SciPy</span><span>Hashing</span>
+          </div>
         </div>
-    </footer>
+        <a class="project-link" href="https://github.com/Monish24/scalable-user-similarity-netflix" target="_blank" rel="noopener">View →</a>
+      </article>
 
-    <script src="script.js"></script>
+      <article class="project">
+        <div class="project-num">002</div>
+        <div class="project-body">
+          <h3 class="project-title">SpanADE &mdash; Adverse Drug Event <em>Extraction</em></h3>
+          <div class="project-meta">Leiden · 2025 · Transformers · NLP</div>
+          <p class="project-desc">
+            Compared BERT, BioBERT, ClinicalBERT, and SpanBERT for span-level adverse drug
+            event extraction from noisy patient forum text (CADEC corpus). Designed two
+            preprocessing strategies for overlapping span annotations; merge preprocessing
+            measurably improved span capture, and SpanBERT held up competitively even
+            without task-specific fine-tuning.
+          </p>
+          <div class="project-tags">
+            <span>PyTorch</span><span>Hugging Face</span><span>seqeval</span><span>NER</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://github.com/Monish24/ADE-SpanExtraction-Transformers" target="_blank" rel="noopener">View →</a>
+      </article>
+
+      <article class="project">
+        <div class="project-num">003</div>
+        <div class="project-body">
+          <h3 class="project-title">Codenames AI &mdash; <em>Multi-Agent</em> Framework</h3>
+          <div class="project-meta">Leiden · 2025 · Lead developer</div>
+          <p class="project-desc">
+            Led development of an AI framework for the game Codenames with six agent
+            strategies &mdash; Monte Carlo Tree Search, Sentence-BERT, word embeddings,
+            curriculum learning, Tree-of-Thoughts, and a baseline. Built the GUI with
+            real-time board visualisation and a TrueSkill-based tournament system that
+            evaluates both raw performance and clue believability.
+          </p>
+          <div class="project-tags">
+            <span>Python</span><span>sentence-transformers</span><span>TrueSkill</span><span>MCTS</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://github.com/Monish24/codenames-ai-a3" target="_blank" rel="noopener">View →</a>
+      </article>
+
+      <article class="project">
+        <div class="project-num">004</div>
+        <div class="project-body">
+          <h3 class="project-title">Flu Vaccine Uptake &mdash; <em>DrivenData</em> Competition</h3>
+          <div class="project-meta">Nottingham · 2023 · Rank 21 · AUC 0.864</div>
+          <p class="project-desc">
+            Predicted H1N1 and seasonal flu vaccine uptake from the National 2009 H1N1 Flu
+            Survey. Engineered features from vaccine-efficacy aggregates and concern×knowledge
+            interactions, then ensembled XGBoost, LightGBM, CatBoost, and GBM &mdash; final
+            5-fold AUC of 0.8637, good for rank 21 on the public leaderboard.
+          </p>
+          <div class="project-tags">
+            <span>XGBoost</span><span>LightGBM</span><span>CatBoost</span><span>Ensembles</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://github.com/Monish24/Flu-vaccine-uptake" target="_blank" rel="noopener">View →</a>
+      </article>
+
+      <article class="project">
+        <div class="project-num">005</div>
+        <div class="project-body">
+          <h3 class="project-title">Ransomware Bitcoin Detection at <em>Scale</em></h3>
+          <div class="project-meta">Nottingham · 2023 · PySpark</div>
+          <p class="project-desc">
+            Detected ransom-related Bitcoin transactions across 2.9M rows of UCI data
+            (2009&ndash;2018) using PySpark for distributed preprocessing and modelling.
+            Handled severe class imbalance (98.6/1.4) with SMOTE-ENN and tuned Logistic
+            Regression, Decision Tree, Random Forest, and bagged ensembles via 5-fold
+            CV on macro-F1. The Decision Tree won on accuracy and macro-F1 while staying
+            interpretable enough for high-throughput scoring.
+          </p>
+          <div class="project-tags">
+            <span>PySpark</span><span>Spark MLlib</span><span>imbalanced-learn</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://github.com/Monish24/Ransom-Payment-Detection-" target="_blank" rel="noopener">View →</a>
+      </article>
+
+      <article class="project">
+        <div class="project-num">006</div>
+        <div class="project-body">
+          <h3 class="project-title">Zupe &mdash; Music + <em>Social</em> Streaming Platform</h3>
+          <div class="project-meta">BSc Final Year · 2022 · Full-stack</div>
+          <p class="project-desc">
+            A full-stack web application combining music streaming with a social network
+            built around shared taste &mdash; profiles, monthly playlists, friends, comments,
+            and privacy controls. Vue 2 + TypeScript + Vuex on the frontend with drag-and-drop
+            playlists; Node/Express + MySQL with Spotify Web API integration on the backend.
+          </p>
+          <div class="project-tags">
+            <span>Vue.js</span><span>TypeScript</span><span>Node.js</span><span>MySQL</span><span>Spotify API</span>
+          </div>
+        </div>
+        <a class="project-link" href="https://github.com/Monish24/Zupe" target="_blank" rel="noopener">View →</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-num">03 / Education</div>
+      <h2 class="section-title">Where I&rsquo;ve <em>learned</em>.</h2>
+    </div>
+    <div class="edu-list">
+
+      <div class="edu-item">
+        <div class="edu-period">Sep 2024 — Dec 2026</div>
+        <div>
+          <div class="edu-school">Leiden University</div>
+          <div class="edu-degree">MSc Computer Science · Data Science specialisation</div>
+          <div class="edu-detail">
+            Advances in Data Mining · Text Mining · Introduction to Deep Learning ·
+            Reinforcement Learning · Recommender Systems · Information Retrieval ·
+            Social Network Analysis · Automated Machine Learning · Modern Game AI ·
+            Multi-Criteria Optimisation &amp; Decision Analysis · Urban Computing ·
+            Computational Creativity · Quantum Algorithms.
+          </div>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-period">2022 — 2023</div>
+        <div>
+          <div class="edu-school">University of Nottingham</div>
+          <div class="edu-degree">Postgraduate Diploma, Data Science</div>
+          <div class="edu-detail">
+            Completed taught coursework component of the MSc programme. Coursework included
+            machine learning, big data with Apache Spark, statistical modelling, and
+            data visualisation.
+          </div>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-period">2019 — 2022</div>
+        <div>
+          <div class="edu-school">Mithibai College, University of Mumbai</div>
+          <div class="edu-degree">BSc Computer Science</div>
+          <div class="edu-detail">
+            Final-year project: Zupe &mdash; full-stack music streaming and social platform
+            (Vue.js, TypeScript, Node.js, MySQL).
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="contact-block">
+      <div class="section-num" style="margin-bottom:24px;">04 / Contact</div>
+      <h2 class="contact-title">Let&rsquo;s talk about <em>data</em>.</h2>
+      <p class="lede" style="margin: 0 auto;">
+        Open to thesis internships and full-time data science roles in the Netherlands
+        or remote across the EU. The fastest way to reach me is email.
+      </p>
+      <div class="contact-methods">
+        <a href="mailto:YOUR_EMAIL@example.com">YOUR_EMAIL@example.com</a>
+        <a href="https://github.com/Monish24" target="_blank" rel="noopener">github.com/Monish24</a>
+        <a href="https://www.linkedin.com/in/YOUR_HANDLE" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    © 2026 Monish Shah · Built with care in Leiden
+  </div>
+</footer>
+
+<script>
+  // Set portrait image when available
+  // To use your photo: replace the empty src below with your image path (e.g., "photo.jpg")
+  // The script will automatically swap from the placeholder disc to your photo.
+  (function() {
+    var img = document.getElementById('portrait-img');
+    var portrait = document.getElementById('portrait');
+    img.onload = function() { portrait.classList.add('has-photo'); };
+    // img.src = "photo.jpg";  // uncomment and set your photo filename
+  })();
+
+  // Smooth nav highlight on scroll
+  var sections = document.querySelectorAll('section, header.hero');
+  var navLinks = document.querySelectorAll('nav ul a');
+  window.addEventListener('scroll', function() {
+    var scrollY = window.scrollY + 120;
+    sections.forEach(function(sec) {
+      if (scrollY >= sec.offsetTop && scrollY < sec.offsetTop + sec.offsetHeight) {
+        var id = sec.id;
+        navLinks.forEach(function(link) {
+          link.style.color = link.getAttribute('href') === '#' + id ? 'var(--accent)' : '';
+        });
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
